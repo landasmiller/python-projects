@@ -1,0 +1,75 @@
+## pip install requests
+## !pip install beautifulsoup4
+
+import requests
+from bs4 import BeautifulSoup as bs
+r = requests.get("https://keithgalli.github.io/web-scraping/example.html")
+
+soup = bs(r.content)
+
+print(soup)
+first_header = soup.find("h2")
+
+
+headers = soup.find_all("h2")
+print(headers)
+
+body = soup.find('body')
+## print(body)
+
+div = body.find('div')
+header = div.find('h1')
+print(header)
+
+import re
+paragraphs = soup.find_all("p", string= re.compile("Some"))
+print(paragraphs)
+
+headers = soup.find_all("h2", string=re.compile("(H|h)eader"))
+print(headers)
+
+## css selector https://www.w3schools.com/cssref/css_selectors.php
+
+content = soup.select("p") ## find all of p
+print(content)
+
+print(soup.body.prettify())
+
+content = soup.select("div p") ## find all of p inside div
+print(content)
+
+paragraphs = soup.select("h2 ~ p")
+print(paragraphs)
+
+bold_text = soup.select("p#paragraph-id b")
+print(bold_text)
+
+## Select vs. find/find_all
+## select is used when pulling CSS elements of a website
+paragraphs = soup.select("body > p")
+print(paragraphs)
+
+for paragraph in paragraphs:
+
+    print(paragraph.select("i"))
+
+## .string removes the html tag from the print
+##if multiple child elements, use get_text
+header = soup.find("h2")
+print(header.string)
+
+div = soup.find("div")
+print(div.prettify())
+print(div.get_text())
+
+link = soup.find("a")
+## print(link)
+link["href"]
+
+## paragraphs = soup.select("p#paragraph-id")
+
+# path syntax
+work = soup.body.div.h1.string
+print(work)
+
+soup.body.find("div").find_next_siblings()
