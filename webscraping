@@ -72,4 +72,36 @@ link["href"]
 work = soup.body.div.h1.string
 print(work)
 
+#NEW SECTION
 soup.body.find("div").find_next_siblings()
+
+r = requests.get("https://keithgalli.github.io/web-scraping/webpage.html")
+
+webpage = bs(r.content)
+
+print(webpage)
+links = webpage.find_all("a")
+links
+
+links_4 = webpage.find_all("a")
+links_4
+
+links_2 = webpage.select("a")
+print(links_2)
+
+links_3 = webpage.find("ul", attrs={"class": "socials"})
+print(links_3)
+
+links_5 = webpage.select("a")
+print(links_5)
+
+links_6 = webpage.select("ul.socials a")
+print(links_6)
+
+actual_links = [link['href'] for link in links_6]
+actual_links
+
+ulist  = webpage.find("ul", attrs={"class": "socials"})
+links_7 = ulist.find_all("a")
+print(links_7)
+
